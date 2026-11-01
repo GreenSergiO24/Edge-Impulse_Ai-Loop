@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Raw Signal Diagnostics | Motion Lab</title>
+    <link rel="stylesheet" href="./css/dashboard.css">
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <header class="app-header">
+        <div class="header-inner">
+          <a class="brand" href="./dashboard.html" aria-label="Motion Lab dashboard">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none">
+                <path d="M5 18h5l3-9 5 15 3-9h6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="brand-name">
+              Motion Lab
+              <span class="brand-caption">EDGE IMPULSE / L1</span>
+            </span>
+          </a>
+
+          <div class="header-actions">
+            <div id="connection-status" class="connection-status" data-state="connecting" role="status" aria-live="polite">
+              <span class="connection-light" aria-hidden="true"></span>
+              <span id="connection-label">Connecting to device</span>
+            </div>
+            <button id="logout-button" class="logout-button" type="button">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M8 3.5H4.75A1.25 1.25 0 0 0 3.5 4.75v10.5a1.25 1.25 0 0 0 1.25 1.25H8m3-3 3.5-3.5L11 6.5m3.5 3.5H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-page">
+        <section class="dashboard-intro" aria-labelledby="dashboard-title">
+          <div>
+            <p class="eyebrow"><span class="intro-marker" aria-hidden="true"></span> Lab 01 <span class="eyebrow-divider">/</span> Live diagnostics</p>
+            <h1 id="dashboard-title">Raw signal diagnostics</h1>
+            <p class="intro-description">A real-time view of motion, orientation, and device temperature.</p>
+          </div>
+          <div class="stream-summary">
+            <span class="stream-label"><span class="stream-indicator" aria-hidden="true"></span>DATA STREAM</span>
+            <span id="last-updated">No telemetry received yet</span>
+            <span id="stream-message" class="stream-message" role="status" aria-live="polite" hidden></span>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="widget-card chart-card" aria-labelledby="chart-title">
+            <header class="widget-heading">
+              <div>
+                <p class="widget-kicker">Acceleration <span>/</span> g</p>
+                <h2 id="chart-title">Live signal waveform</h2>
+              </div>
+              <span class="window-label">Rolling 8 seconds</span>
+            </header>
+            <div class="chart-legend" aria-label="Chart axes">
+              <span><i class="legend-swatch axis-x" aria-hidden="true"></i>Axis X</span>
+              <span><i class="legend-swatch axis-y" aria-hidden="true"></i>Axis Y</span>
+              <span><i class="legend-swatch axis-z" aria-hidden="true"></i>Axis Z</span>
+            </div>
+            <div class="chart-stage">
+              <canvas id="acceleration-chart" aria-label="Live acceleration chart for X, Y, and Z axes">
+                Live acceleration values will appear here.
+              </canvas>
+              <div id="telemetry-loading" class="loading-state" role="status" aria-live="polite">
+                <span class="loading-spinner" aria-hidden="true"></span>
+                <span id="telemetry-loading-text">Waiting for device telemetry</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="widget-card values-card" aria-labelledby="values-title">
+            <header class="widget-heading">
+              <div>
+                <p class="widget-kicker">Sensor readout</p>
+                <h2 id="values-title">Current values</h2>
+              </div>
+              <span id="telemetry-live-status" class="live-tag" data-state="connecting">
+                <span class="live-tag-dot" aria-hidden="true"></span>
+                <span id="telemetry-live-label">WAITING</span>
+              </span>
+            </header>
+
+            <div class="sensor-groups">
+              <section class="metric-group" aria-labelledby="acceleration-heading">
+                <h3 id="acceleration-heading">Acceleration <span>g</span></h3>
+                <div class="metric-grid">
+                  <div class="metric-tile"><span class="metric-axis">X</span><output class="metric-value" data-sensor-key="acc_x">--</output></div>
+                  <div class="metric-tile"><span class="metric-axis">Y</span><output class="metric-value" data-sensor-key="acc_y">--</output></div>
+                  <div class="metric-tile"><span class="metric-axis">Z</span><output class="metric-value" data-sensor-key="acc_z">--</output></div>
+                </div>
+              </section>
+
+              <section class="metric-group" aria-labelledby="gyroscope-heading">
+                <h3 id="gyroscope-heading">Gyroscope <span>°/s</span></h3>
+                <div class="metric-grid">
+                  <div class="metric-tile"><span class="metric-axis">X</span><output class="metric-value" data-sensor-key="gyro_x">--</output></div>
+                  <div class="metric-tile"><span class="metric-axis">Y</span><output class="metric-value" data-sensor-key="gyro_y">--</output></div>
+                  <div class="metric-tile"><span class="metric-axis">Z</span><output class="metric-value" data-sensor-key="gyro_z">--</output></div>
+                </div>
+              </section>
+
+              <section class="metric-group" aria-labelledby="angle-heading">
+                <h3 id="angle-heading">Angle <span>°</span></h3>
+                <div class="metric-grid">
+                  <div class="metric-tile"><span class="metric-axis">X</span><output class="metric-value" data-sensor-key="angle_x">--</output></div>
+                  <div class="metric-tile"><span class="metric-axis">Y</span><output class="metric-value" data-sensor-key="angle_y">--</output></div>
+                  <div class="metric-tile"><span class="metric-axis">Z</span><output class="metric-value" data-sensor-key="angle_z">--</output></div>
+                </div>
+              </section>
+
+              <section class="metric-group temperature-group" aria-labelledby="temperature-heading">
+                <h3 id="temperature-heading">Temperature <span>°C</span></h3>
+                <div class="metric-grid">
+                  <div class="metric-tile temperature-tile"><span class="metric-axis">MPU6050</span><output class="metric-value" data-sensor-key="mpu_temp">--</output></div>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section class="widget-card tilt-card" aria-labelledby="tilt-title">
+            <header class="widget-heading">
+              <div>
+                <p class="widget-kicker">Orientation</p>
+                <h2 id="tilt-title">Sensor tilt</h2>
+              </div>
+              <span class="unit-chip">ACC X / Y</span>
+            </header>
+            <div class="tilt-layout">
+              <div id="tilt-gauge" class="tilt-gauge" role="img" aria-label="Sensor tilt indicator. Waiting for accelerometer data.">
+                <span class="gauge-center" aria-hidden="true"></span>
+                <span id="tilt-dot" class="tilt-dot" aria-hidden="true"></span>
+                <span class="gauge-label gauge-label-top" aria-hidden="true">+1g</span>
+                <span class="gauge-label gauge-label-bottom" aria-hidden="true">-1g</span>
+                <span class="gauge-label gauge-label-left" aria-hidden="true">-1g</span>
+                <span class="gauge-label gauge-label-right" aria-hidden="true">+1g</span>
+              </div>
+              <div class="tilt-readings" aria-label="Current tilt axes">
+                <div><span>X axis</span><output data-sensor-key="acc_x">--</output></div>
+                <div><span>Y axis</span><output data-sensor-key="acc_y">--</output></div>
+              </div>
+            </div>
+            <p class="widget-footnote">Tilt position maps accelerometer values from -1g to +1g.</p>
+          </section>
+
+          <section class="widget-card led-card" aria-labelledby="led-title">
+            <header class="widget-heading">
+              <div>
+                <p class="widget-kicker">Device control</p>
+                <h2 id="led-title">Status LED</h2>
+              </div>
+              <span class="device-chip"><span class="device-chip-dot" aria-hidden="true"></span>ESP32 S3</span>
+            </header>
+            <div class="led-control-row">
+              <div class="led-copy">
+                <strong>On-board indicator</strong>
+                <span>Control the LED on your device.</span>
+              </div>
+              <button id="led-switch" class="led-switch" type="button" role="switch" aria-checked="false" aria-label="Status LED" disabled>
+                <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+              </button>
+            </div>
+            <div class="led-state-row">
+              <span>Current state</span>
+              <strong id="led-state-label" class="led-state-label" data-state="off">OFF</strong>
+            </div>
+            <p id="led-status" class="led-status" role="status" aria-live="polite" hidden>
+              <span class="led-status-icon" aria-hidden="true">!</span>
+              <span id="led-status-text"></span>
+            </p>
+          </section>
+        </div>
+
+        <footer class="dashboard-footer">
+          <span>Motion Lab <span class="footer-divider">/</span> Raw signal diagnostics</span>
+          <span>Units reflect raw device readings</span>
+        </footer>
+      </main>
+    </div>
+    <script type="module" src="./js/dashboard.js"></script>
+  </body>
+</html>

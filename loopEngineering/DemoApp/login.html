@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in | Motion Lab</title>
+    <link rel="stylesheet" href="./css/login.css">
+  </head>
+  <body>
+    <main class="login-page">
+      <div class="login-frame">
+        <section class="welcome-panel" aria-labelledby="welcome-heading">
+          <a class="brand" href="./login.html" aria-label="Motion Lab home">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none">
+                <path d="M5 18h5l3-9 5 15 3-9h6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="brand-name">
+              Motion Lab
+              <span class="brand-caption">EDGE IMPULSE / L1</span>
+            </span>
+          </a>
+
+          <div class="welcome-copy">
+            <p class="eyebrow"><span class="signal-dot" aria-hidden="true"></span> Live sensor environment</p>
+            <h1 id="welcome-heading">See every movement <span>as it happens.</span></h1>
+            <p class="welcome-description">A clear view of your sensor signals, from the first reading to the latest movement.</p>
+          </div>
+
+          <div class="telemetry-note">
+            <span class="note-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M3 12h4l2.2-6 4.1 12 2.2-6H21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="note-copy">
+              <strong>Raw signal diagnostics</strong>
+              <span>Real-time MPU6050 telemetry</span>
+            </span>
+            <span class="note-indicator" aria-hidden="true"></span>
+          </div>
+        </section>
+
+        <section class="login-card" aria-labelledby="login-heading">
+          <header class="card-heading">
+            <p class="card-kicker">ThingsBoard customer access</p>
+            <h2 id="login-heading">Welcome back</h2>
+            <p>Sign in with your lab account to open the dashboard.</p>
+          </header>
+
+          <form id="login-form" class="login-form" method="post">
+            <div class="form-field">
+              <label for="username">Username</label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                autocapitalize="none"
+                spellcheck="false"
+                placeholder="you@lab.edu"
+                required
+              >
+            </div>
+
+            <div class="form-field">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter your password"
+                required
+              >
+            </div>
+
+            <p id="login-status" class="form-status" role="status" aria-live="polite" hidden>
+              <span class="status-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M10 6.5v4.25m0 2.75v.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span id="login-status-message"></span>
+            </p>
+
+            <button id="login-submit" class="login-button" type="submit" disabled>
+              <span>Login to Dashboard</span>
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </form>
+
+          <footer class="card-footer">
+            <span class="lock-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none">
+                <rect x="4" y="8.5" width="12" height="8" rx="1.8" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M6.5 8.5V6a3.5 3.5 0 0 1 7 0v2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span>Authenticated securely with ThingsBoard</span>
+          </footer>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="./js/auth.js"></script>
+  </body>
+</html>
